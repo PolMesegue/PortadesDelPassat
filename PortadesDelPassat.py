@@ -9,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 from twython import Twython
 from pdf2image import convert_from_path
 
-keys_file = open("../keys.txt")
+keys_file = open("./keys.txt")
 lines = keys_file.readlines()
 CONSUMER_KEY = lines[0].rstrip()
 CONSUMER_SECRET = lines[1].rstrip()
