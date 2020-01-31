@@ -83,6 +83,6 @@ for fname in image_filenames:
 		twit_resp = twitter.upload_media(media=img)
 		uploaded_ids.append(twit_resp['media_id'])
 
-twitter.update_status(status= f'Portadas de los principales periódicos {sys.argv[1]} año/s atrás, día {day}/{month}/{year}', media_ids=uploaded_ids)
+twitter.update_status(status= f'Portades dels principals diaris {sys.argv[1]} any/s enrere, dia {day}/{month}/{year}', media_ids=uploaded_ids)
 
 shutil.rmtree('./temporal')
