@@ -1,4 +1,4 @@
-# PortadasDelPasado
+# PortadesDelPassat
 Bot que piula diariament:
 - 09:00h les portades de fa 1 any.
 - 12:00h les portades de fa 3 anys.
