@@ -10,7 +10,6 @@ from dateutil.relativedelta import relativedelta
 from pdf2image import convert_from_path
 
 try:
-
 	os.mkdir('temporal')
 
 	keys_file = open("keys.txt")
@@ -23,7 +22,6 @@ try:
 
 	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-
 	api = tweepy.API(auth)
 
 	#Time relative work
@@ -75,12 +73,10 @@ try:
 	api.update_status(status= f'Portades dels principals diaris {years_elapsed} {anyoanys} enrere, dia {day}/{month}/{year}', media_ids=uploaded_ids)
 
 except:
-
 	uploaded_ids = []
 	res = api.media_upload('fail.jpg')
 	uploaded_ids.append(res.media_id)
 	api.update_status("Per motius tècnics, no ha sigut possible la piulada, ho intentarem de nou en breus instants", media_ids=uploaded_ids)
 
 finally:
-
 	shutil.rmtree('temporal')
