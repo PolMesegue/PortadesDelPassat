@@ -20,36 +20,15 @@ os.mkdir('./temporal')
 
 #Time relative work
 
-year_ago = datetime.now() - relativedelta(years=int(sys.argv[1]))
+years_elapsed=int(sys.argv[1])
+year_ago = datetime.now() - relativedelta(years=years_elapsed)
 year = year_ago.strftime("%Y")
 lc_year = year_ago.strftime("%y")
 month = year_ago.strftime("%m")
 day = year_ago.strftime("%d")
 
-if month == "01":
-	letter_month = "E"
-elif month == "02":
-	letter_month = "F"
-elif month == "03":
-	letter_month = "M"
-elif month == "04":
-	letter_month = "A"
-elif month == "05":
-	letter_month = "Y"
-elif month == "06":
-	letter_month = "J"
-elif month == "07":
-	letter_month = "L"
-elif month == "08":
-	letter_month = "G"
-elif month == "09":
-	letter_month = "S"
-elif month == "10":
-	letter_month = "O"
-elif month == "11":
-	letter_month = "N"
-else:
-	letter_month = "D"
+aux=['E','F','M','A','Y','J','L','G','S','O','N','D']
+letter_month=aux[int(year)-1]
 
 #LaVanguardia
 url = f'http://hemeroteca-paginas.lavanguardia.com/LVE05/PUB/{year}/{month}/{day}/LVG{year}{month}{day}0011LB.pdf'
@@ -83,6 +62,8 @@ for fname in image_filenames:
 		twit_resp = twitter.upload_media(media=img)
 		uploaded_ids.append(twit_resp['media_id'])
 
-twitter.update_status(status= f'Portades dels principals diaris {sys.argv[1]} any/s enrere, dia {day}/{month}/{year}', media_ids=uploaded_ids)
+anyoanys='any' if years_elapsed==1 else 'anys'
+
+twitter.update_status(status= f'Portades dels principals diaris {years_elapsed} {anyoanys} enrere, dia {day}/{month}/{year}', media_ids=uploaded_ids)
 
 shutil.rmtree('./temporal')
