@@ -3,18 +3,23 @@ import sys
 import wget
 import shutil
 import os
+import tweepy
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from twython import Twython
 from pdf2image import convert_from_path
 
-keys_file = open("keys.txt")
+keys_file = open("../keys.txt")
 lines = keys_file.readlines()
 CONSUMER_KEY = lines[0].rstrip()
 CONSUMER_SECRET = lines[1].rstrip()
 ACCESS_KEY = lines[2].rstrip()
 ACCESS_SECRET = lines[3].rstrip()
+
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+
+api = tweepy.API(auth)
 
 os.mkdir('./temporal')
 
@@ -31,6 +36,7 @@ aux=['E','F','M','A','Y','J','L','G','S','O','N','D']
 letter_month=aux[int(month)-1]
 
 #LaVanguardia
+
 url = f'http://hemeroteca-paginas.lavanguardia.com/LVE05/PUB/{year}/{month}/{day}/LVG{year}{month}{day}0011LB.pdf'
 wget.download(url, './temporal/lavanguardia.pdf')
 
@@ -53,18 +59,17 @@ for page in pages:
 url = f'https://srv00.epimg.net/pdf/elpais/snapshot/{year}/{month}/elpais/{year}{month}{day}Big.jpg'
 wget.download(url, './temporal/elpais.jpg')
 
-twitter = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
-
-image_filenames = ['./temporal/elpais.jpg', './temporal/lavanguardia.jpg', './temporal/abc.jpg']
+filenames = ['./temporal/elpais.jpg', './temporal/lavanguardia.jpg', './temporal/abc.jpg']
 uploaded_ids = []
-for fname in image_filenames:
-	with open(fname, 'rb') as img:
-		twit_resp = twitter.upload_media(media=img)
-		uploaded_ids.append(twit_resp['media_id'])
+
+for filename in filenames:
+	res = api.media_upload(filename)
+	uploaded_ids.append(res.media_id)
 
 anyoanys='any' if years_elapsed==1 else 'anys'
 
-twitter.update_status(status= f'Portades dels principals diaris {years_elapsed} {anyoanys} enrere, dia {day}/{month}/{year}', media_ids=uploaded_ids)
+api.update_status(status= f'Portades dels principals diaris {years_elapsed} {anyoanys} enrere, dia {day}/{month}/{year}', media_ids=uploaded_ids)
 
 shutil.rmtree('./temporal')
+
