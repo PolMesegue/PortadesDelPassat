@@ -38,7 +38,7 @@ try:
 except:
 	sys.exit()
 
-	
+
 	#LaVanguardia
 try:
 	url = f'http://hemeroteca-paginas.lavanguardia.com/LVE05/PUB/{year}/{month}/{day}/LVG{year}{month}{day}0011LB.pdf'
@@ -60,7 +60,7 @@ try:
 	for page in pages:
     		page.save('temporal/abc.jpg', 'JPEG')
 except:
-	os.system("cp fail.jpg temporal/lavanguardia.jpg")
+	os.system("cp fail.jpg temporal/abc.jpg")
 
 #ElPais
 try:
