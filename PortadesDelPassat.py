@@ -37,33 +37,33 @@ try:
 	letter_month=aux[int(month)-1]
 
 	#LaVanguardia
+	try:
+		url = f'http://hemeroteca-paginas.lavanguardia.com/LVE05/PUB/{year}/{month}/{day}/LVG{year}{month}{day}0011LB.pdf'
+		wget.download(url, 'temporal/lavanguardia.pdf')
 
-	url = f'http://hemeroteca-paginas.lavanguardia.com/LVE05/PUB/{year}/{month}/{day}/LVG{year}{month}{day}0011LB.pdf'
-	wget.download(url, 'temporal/lavanguardia.pdf')
+		pages = convert_from_path('temporal/lavanguardia.pdf', 500)
 
-	pages = convert_from_path('temporal/lavanguardia.pdf', 500)
+		for page in pages:
+			page.save('temporal/lavanguardia.jpg', 'JPEG')
 
-	for page in pages:
-	    page.save('temporal/lavanguardia.jpg', 'JPEG')
-
+		
 	#ABC
+	try:
+		url = f'http://hemeroteca.abc.es/cgi-bin/pagina.pdf?fn=exec;command=stamp;path=H:\cran\data\prensa_pages\Madrid\ABC\{year}\{year}{month}\{year}{month}{day}\{lc_year}{letter_month}{day}-001.xml;id=0006839617#view=Fit'
+		wget.download(url, 'temporal/abc.pdf')
+		pages = convert_from_path('temporal/abc.pdf', 500)
 
-	url = f'http://hemeroteca.abc.es/cgi-bin/pagina.pdf?fn=exec;command=stamp;path=H:\cran\data\prensa_pages\Madrid\ABC\{year}\{year}{month}\{year}{month}{day}\{lc_year}{letter_month}{day}-001.xml;id=0006839617#view=Fit'
-	wget.download(url, 'temporal/abc.pdf')
-	pages = convert_from_path('temporal/abc.pdf', 500)
-
-	for page in pages:
-	    page.save('temporal/abc.jpg', 'JPEG')
+		for page in pages:
+	    		page.save('temporal/abc.jpg', 'JPEG')
 
 	#ElPais
-
-	url = f'https://srv00.epimg.net/pdf/elpais/snapshot/{year}/{month}/elpais/{year}{month}{day}Big.jpg'
-	wget.download(url, 'temporal/elpais.jpg')
+	try:
+		url = f'https://srv00.epimg.net/pdf/elpais/snapshot/{year}/{month}/elpais/{year}{month}{day}Big.jpg'
+		wget.download(url, 'temporal/elpais.jpg')
 
 
 	filenames = ['temporal/elpais.jpg', 'temporal/lavanguardia.jpg', 'temporal/abc.jpg']
 	uploaded_ids = []
-
 	for filename in filenames:
 		res = api.media_upload(filename)
 		uploaded_ids.append(res.media_id)
