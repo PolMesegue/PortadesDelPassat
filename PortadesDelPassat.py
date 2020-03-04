@@ -45,8 +45,9 @@ try:
 
 		for page in pages:
 			page.save('temporal/lavanguardia.jpg', 'JPEG')
-
-		
+	
+	except:
+		os.system("cp fail.jpg temporal/lavanguardia.jpg")
 	#ABC
 	try:
 		url = f'http://hemeroteca.abc.es/cgi-bin/pagina.pdf?fn=exec;command=stamp;path=H:\cran\data\prensa_pages\Madrid\ABC\{year}\{year}{month}\{year}{month}{day}\{lc_year}{letter_month}{day}-001.xml;id=0006839617#view=Fit'
@@ -55,11 +56,15 @@ try:
 
 		for page in pages:
 	    		page.save('temporal/abc.jpg', 'JPEG')
+	except:
+		os.system("cp fail.jpg temporal/lavanguardia.jpg")
 
 	#ElPais
 	try:
 		url = f'https://srv00.epimg.net/pdf/elpais/snapshot/{year}/{month}/elpais/{year}{month}{day}Big.jpg'
 		wget.download(url, 'temporal/elpais.jpg')
+	except:
+		os.system("cp fail.jpg temporal/elpais.jpg")
 
 
 	filenames = ['temporal/elpais.jpg', 'temporal/lavanguardia.jpg', 'temporal/abc.jpg']
