@@ -53,12 +53,8 @@ except:
 	os.system("cp fail.jpg temporal/lavanguardia.jpg")
 #ABC
 try:
-	url = f'http://hemeroteca.abc.es/cgi-bin/pagina.pdf?fn=exec;command=stamp;path=H:\cran\data\prensa_pages\Madrid\ABC\{year}\{year}{month}\{year}{month}{day}\{lc_year}{letter_month}{day}-001.xml;id=0006839617#view=Fit'
-	wget.download(url, 'temporal/abc.pdf')
-	pages = convert_from_path('temporal/abc.pdf', 500)
-
-	for page in pages:
-    		page.save('temporal/abc.jpg', 'JPEG')
+	url = f'https://static.abc.es/media/hemeroteca/{year}/{month}/{day}/abc-madrid-{year}{month}{day}-1-t6w--620x846.jpg'
+	wget.download(url, 'temporal/abc.jpg')
 except:
 	os.system("cp fail.jpg temporal/abc.jpg")
 
