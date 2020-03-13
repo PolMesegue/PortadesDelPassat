@@ -2,6 +2,7 @@
 import sys
 import wget
 import shutil
+import time
 import os
 import tweepy
 
@@ -45,9 +46,10 @@ try:
 	wget.download(url, 'temporal/lavanguardia.pdf')
 
 	pages = convert_from_path('temporal/lavanguardia.pdf', 500)
-
+	time.sleep(3)
 	for page in pages:
 		page.save('temporal/lavanguardia.jpg', 'JPEG')
+	time.sleep(3)
 
 except:
 	os.system("cp fail.jpg temporal/lavanguardia.jpg")
@@ -55,6 +57,7 @@ except:
 try:
 	url = f'https://static.abc.es/media/hemeroteca/{year}/{month}/{day}/abc-madrid-{year}{month}{day}-1-t6w--620x846.jpg'
 	wget.download(url, 'temporal/abc.jpg')
+	time.sleep(3)
 except:
 	os.system("cp fail.jpg temporal/abc.jpg")
 
@@ -62,6 +65,7 @@ except:
 try:
 	url = f'https://srv00.epimg.net/pdf/elpais/snapshot/{year}/{month}/elpais/{year}{month}{day}Big.jpg'
 	wget.download(url, 'temporal/elpais.jpg')
+	time.sleep(3)
 except:
 	os.system("cp fail.jpg temporal/elpais.jpg")
 
@@ -71,9 +75,9 @@ try:
 	for filename in filenames:
 		res = api.media_upload(filename)
 		uploaded_ids.append(res.media_id)
+		
 
 	anyoanys = 'any' if years_elapsed == 1 else 'anys'
-
 	api.update_status(status= f'Portades dels principals diaris {years_elapsed} {anyoanys} enrere, dia {day}/{month}/{year}', media_ids=uploaded_ids)
 
 except:
